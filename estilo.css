@@ -1,0 +1,349 @@
+/* ==========================================================
+   ACHEI! — visual inspirado no Bootswatch Quartz
+   Roxo profundo + vidro translúcido + acento magenta/ciano
+   ========================================================== */
+
+:root {
+  --fundo:      #1a0b2e;
+  --fundo-2:    #2a1247;
+  --vidro:      rgba(255, 255, 255, .07);
+  --vidro-forte:rgba(255, 255, 255, .12);
+  --linha:      rgba(255, 255, 255, .14);
+  --texto:      #f3ecff;
+  --texto-2:    #b9a8d6;
+  --magenta:    #ff4fa3;
+  --ciano:      #5ce1ff;
+  --verde:      #6ef3b0;
+  --amarelo:    #ffd166;
+
+  --fonte-titulo: 'Bricolage Grotesque', system-ui, sans-serif;
+  --fonte-texto:  'DM Sans', system-ui, sans-serif;
+  --fonte-codigo: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--fonte-texto);
+  color: var(--texto);
+  background:
+    radial-gradient(900px 500px at 12% -5%, rgba(255, 79, 163, .28), transparent 60%),
+    radial-gradient(800px 500px at 100% 0%, rgba(92, 225, 255, .18), transparent 55%),
+    linear-gradient(180deg, var(--fundo) 0%, var(--fundo-2) 100%);
+  background-attachment: fixed;
+  line-height: 1.55;
+}
+
+.pular-link {
+  position: absolute; left: -999px; top: 8px;
+  background: var(--ciano); color: #111; padding: 8px 14px; border-radius: 8px; z-index: 99;
+}
+.pular-link:focus { left: 8px; }
+
+/* ---------------- TOPO ---------------- */
+.topo { padding: 28px 0 8px; }
+
+.topo-linha {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  margin-bottom: 28px;
+}
+
+.marca { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.marca-nome {
+  font-family: var(--fonte-titulo);
+  font-weight: 800; font-size: 1.6rem; letter-spacing: -.02em;
+  color: var(--magenta);
+}
+.marca-sub { color: var(--texto-2); font-size: .95rem; }
+
+.contador {
+  font-size: .85rem; color: var(--texto-2);
+  background: var(--vidro); border: 1px solid var(--linha);
+  padding: 6px 12px; border-radius: 999px;
+  backdrop-filter: blur(8px);
+}
+
+.titulo {
+  font-family: var(--fonte-titulo);
+  font-weight: 800;
+  font-size: clamp(2.2rem, 6.4vw, 4.4rem);
+  line-height: 1.02;
+  letter-spacing: -.035em;
+  margin: 0 0 22px;
+  max-width: 14ch;
+}
+.titulo-ponto { color: var(--ciano); }
+
+/* ---------------- CAIXA DE BUSCA ---------------- */
+.busca-caixa {
+  position: relative;
+  display: flex; align-items: center;
+  background: var(--vidro-forte);
+  border: 2px solid var(--linha);
+  border-radius: 22px;
+  padding: 0 18px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition: border-color .18s, box-shadow .18s, background .18s;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, .28);
+}
+.busca-caixa:focus-within {
+  border-color: var(--magenta);
+  background: rgba(255, 255, 255, .16);
+  box-shadow: 0 0 0 5px rgba(255, 79, 163, .22), 0 14px 50px rgba(0, 0, 0, .35);
+}
+
+.busca-icone { flex: none; color: var(--texto-2); margin-right: 12px; }
+.busca-caixa:focus-within .busca-icone { color: var(--magenta); }
+
+#busca {
+  flex: 1; min-width: 0;
+  background: transparent; border: 0; outline: 0;
+  color: var(--texto);
+  font-family: var(--fonte-texto);
+  font-size: clamp(1.15rem, 3.2vw, 1.65rem);
+  font-weight: 500;
+  padding: 22px 0;
+}
+#busca::-webkit-search-cancel-button { display: none; }
+
+/* texto de exemplo que "digita sozinho" (some quando o aluno digita) */
+.busca-fantasma {
+  position: absolute; left: 62px; right: 90px; top: 50%; transform: translateY(-50%);
+  color: var(--texto-2); opacity: .75;
+  font-size: clamp(1.15rem, 3.2vw, 1.65rem); font-weight: 500;
+  pointer-events: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.busca-fantasma::after {
+  content: ''; display: inline-block; width: 2px; height: 1.15em;
+  background: var(--magenta); margin-left: 3px; vertical-align: text-bottom;
+  animation: piscar 1s steps(1) infinite;
+}
+#busca:not(:placeholder-shown) ~ .busca-fantasma,
+#busca:focus:not(:placeholder-shown) ~ .busca-fantasma { display: none; }
+
+@keyframes piscar { 50% { opacity: 0; } }
+
+.busca-limpar {
+  flex: none; margin-left: 8px;
+  width: 38px; height: 38px; border-radius: 50%;
+  border: 0; background: var(--vidro-forte); color: var(--texto);
+  font-size: 1rem; cursor: pointer;
+  display: grid; place-items: center;
+  transition: background .15s, transform .15s;
+}
+.busca-limpar:hover { background: var(--magenta); color: #fff; }
+.busca-limpar[hidden] { display: none; }
+
+.busca-atalho {
+  flex: none; margin-left: 10px;
+  font-family: var(--fonte-codigo);
+  color: var(--texto-2); background: var(--vidro);
+  border: 1px solid var(--linha); border-bottom-width: 3px;
+  border-radius: 8px; padding: 2px 10px; font-size: 1rem;
+}
+.busca-caixa:focus-within .busca-atalho,
+#busca:not(:placeholder-shown) ~ .busca-atalho { display: none; }
+.busca-limpar:not([hidden]) ~ .busca-atalho { display: none; }
+
+.dica-busca { margin: 14px 4px 0; color: var(--texto-2); font-size: .95rem; max-width: 62ch; }
+.dica-busca em { color: var(--ciano); font-style: normal; font-weight: 600; }
+
+/* ---------------- CHIPS DE CATEGORIA ---------------- */
+.chips {
+  display: flex; gap: 8px; margin: 22px 0 6px;
+  overflow-x: auto; padding: 4px 2px 12px;
+  scrollbar-width: thin; scrollbar-color: var(--linha) transparent;
+  -webkit-overflow-scrolling: touch;
+}
+.chip {
+  flex: none;
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: var(--fonte-texto); font-weight: 600; font-size: .92rem;
+  color: var(--texto);
+  background: var(--vidro); border: 1px solid var(--linha);
+  padding: 8px 14px; border-radius: 999px; cursor: pointer;
+  transition: background .15s, border-color .15s, transform .15s;
+}
+.chip:hover { background: var(--vidro-forte); }
+.chip[aria-pressed="true"] {
+  background: var(--magenta); border-color: var(--magenta); color: #2a0a1c;
+}
+.chip-n { font-size: .78rem; opacity: .7; font-weight: 500; }
+
+/* ---------------- STATUS ---------------- */
+.principal { padding-top: 10px; padding-bottom: 60px; }
+.barra-status {
+  min-height: 28px; margin: 10px 2px 14px;
+  color: var(--texto-2); font-size: .95rem;
+  display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
+}
+.barra-status strong { color: var(--texto); }
+.ver-tudo {
+  background: none; border: 0; color: var(--ciano); cursor: pointer;
+  font: inherit; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; padding: 0;
+}
+
+/* ---------------- CARTÃO DE RESULTADO ---------------- */
+.lista { display: grid; gap: 16px; }
+
+.res {
+  background: var(--vidro);
+  border: 1px solid var(--linha);
+  border-radius: 20px;
+  padding: 20px 22px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  animation: entrar .28s ease both;
+}
+@keyframes entrar { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+.res-topo {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.res-classe {
+  font-family: var(--fonte-codigo); font-weight: 700;
+  font-size: clamp(1.15rem, 3.4vw, 1.45rem);
+  color: var(--ciano);
+  background: rgba(92, 225, 255, .1);
+  border: 1.5px dashed rgba(92, 225, 255, .5);
+  border-radius: 12px; padding: 6px 14px;
+  cursor: pointer; text-align: left;
+  display: inline-flex; align-items: center; gap: 10px;
+  transition: background .15s, border-color .15s, transform .12s;
+  word-break: break-all;
+}
+.res-classe:hover { background: rgba(92, 225, 255, .2); border-style: solid; }
+.res-classe:active { transform: scale(.97); }
+.res-classe .ico-copiar { opacity: .6; font-size: .8em; flex: none; }
+.res-classe .valor-sel { color: var(--amarelo); }
+.res-classe mark, .res-desc mark { background: rgba(255, 79, 163, .35); color: inherit; border-radius: 3px; padding: 0 1px; }
+
+.res-cat {
+  font-size: .85rem; color: var(--texto-2);
+  background: var(--vidro); border: 1px solid var(--linha);
+  padding: 4px 11px; border-radius: 999px; white-space: nowrap;
+}
+
+.res-desc { font-size: 1.05rem; margin: 6px 0 14px; max-width: 70ch; }
+
+/* seletor de valor (0–5) */
+.valores { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin: 0 0 14px; }
+.valores-rotulo { font-size: .88rem; color: var(--texto-2); margin-right: 4px; }
+.valor-btn {
+  font-family: var(--fonte-codigo); font-weight: 700; font-size: .95rem;
+  width: 38px; height: 38px; border-radius: 10px;
+  background: var(--vidro); color: var(--texto); border: 1px solid var(--linha);
+  cursor: pointer; transition: background .12s;
+}
+.valor-btn:hover { background: var(--vidro-forte); }
+.valor-btn[aria-pressed="true"] { background: var(--amarelo); color: #2b1d00; border-color: var(--amarelo); }
+
+/* demo ao vivo */
+.demo-bloco { margin: 0 0 14px; }
+.demo-rotulo { font-size: .85rem; color: var(--texto-2); margin: 0 0 6px 2px; }
+.demo {
+  background: rgba(0, 0, 0, .28);
+  border: 1px solid var(--linha);
+  border-radius: 14px; padding: 18px;
+  overflow-x: auto;
+}
+
+/* onde funciona / dica */
+.info-linha { display: flex; flex-wrap: wrap; gap: 8px 10px; align-items: baseline; margin: 6px 0 0; }
+.info-rotulo { font-size: .88rem; color: var(--texto-2); }
+.tag-el {
+  font-family: var(--fonte-codigo); font-size: .82rem; font-weight: 500;
+  color: var(--verde); background: rgba(110, 243, 176, .1);
+  border: 1px solid rgba(110, 243, 176, .3);
+  padding: 2px 9px; border-radius: 8px;
+}
+
+.dica-extra {
+  margin: 14px 0 0; padding: 11px 14px;
+  background: rgba(255, 209, 102, .1);
+  border-left: 4px solid var(--amarelo);
+  border-radius: 8px; font-size: .95rem;
+}
+
+/* família de classes */
+.familia { margin-top: 16px; padding-top: 14px; border-top: 1px dashed var(--linha); }
+.familia-titulo { font-size: .88rem; color: var(--texto-2); margin: 0 0 8px; }
+.familia-lista { display: flex; flex-wrap: wrap; gap: 7px; }
+.parente {
+  font-family: var(--fonte-codigo); font-size: .82rem; font-weight: 500;
+  color: var(--texto); background: var(--vidro);
+  border: 1px solid var(--linha); border-radius: 8px;
+  padding: 4px 10px; cursor: pointer;
+  transition: background .12s, border-color .12s;
+}
+.parente:hover { background: rgba(255, 79, 163, .25); border-color: var(--magenta); }
+
+/* ---------------- VAZIO ---------------- */
+.vazio {
+  text-align: center; padding: 50px 20px;
+  background: var(--vidro); border: 1px dashed var(--linha); border-radius: 20px;
+}
+.vazio[hidden] { display: none; }
+.vazio h2 { font-family: var(--fonte-titulo); font-weight: 800; font-size: 1.7rem; margin: 0 0 8px; }
+.vazio p { color: var(--texto-2); margin: 0 auto 16px; max-width: 46ch; }
+.sugestoes { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.sugestao {
+  font-family: var(--fonte-texto); font-weight: 600; font-size: .95rem;
+  color: var(--texto); background: var(--vidro-forte);
+  border: 1px solid var(--linha); border-radius: 999px;
+  padding: 8px 16px; cursor: pointer; transition: background .15s;
+}
+.sugestao:hover { background: var(--magenta); border-color: var(--magenta); color: #2a0a1c; }
+
+/* ---------------- AVISO "COPIADO" ---------------- */
+.aviso-copiado {
+  position: fixed; left: 50%; bottom: 26px; z-index: 50;
+  transform: translate(-50%, 30px); opacity: 0; pointer-events: none;
+  background: var(--verde); color: #04281a;
+  font-weight: 700; padding: 12px 22px; border-radius: 999px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .4);
+  transition: transform .22s ease, opacity .22s ease;
+  max-width: 92vw; text-align: center;
+}
+.aviso-copiado.mostrar { transform: translate(-50%, 0); opacity: 1; }
+.aviso-copiado code { font-family: var(--fonte-codigo); background: rgba(0,0,0,.12); padding: 1px 7px; border-radius: 6px; }
+
+.rodape { padding: 10px 0 40px; color: var(--texto-2); font-size: .9rem; text-align: center; }
+
+/* ---------------- FOCO VISÍVEL + MOVIMENTO REDUZIDO ---------------- */
+:focus-visible { outline: 3px solid var(--amarelo); outline-offset: 3px; border-radius: 6px; }
+#busca:focus-visible { outline: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .busca-fantasma::after { animation: none; }
+}
+
+/* ---------------- CELULAR ---------------- */
+@media (max-width: 575.98px) {
+  .topo-linha { margin-bottom: 20px; }
+  .marca-sub { display: none; }
+  .busca-caixa { padding: 0 12px; border-radius: 18px; }
+  .busca-fantasma { left: 52px; right: 60px; }
+  .busca-atalho { display: none; }
+  .res { padding: 16px; border-radius: 16px; }
+}
+
+/* Proteção: Bootstrap Quartz define fundo/cores de <body>; garantimos nossa paleta */
+.res, .vazio, .chip, .contador { color: var(--texto); }
+
+/* Demos: o Bootstrap deve mandar aqui, não o CSS do site.
+   Reforçamos o básico pra nada do "cartão" vazar pra dentro do exemplo. */
+.demo { color: var(--bs-body-color, var(--texto)); line-height: 1.5; font-family: var(--bs-body-font-family, var(--fonte-texto)); }
+.demo mark, .demo .mark { background: var(--bs-mark-bg, #fcf8e3); color: var(--bs-body-color, #111); }
+.demo button { font-family: inherit; }
+.demo .btn { cursor: default; }
+
+.parente-mais { color: var(--ciano); border-style: dashed; }
